@@ -1,0 +1,1 @@
+insert into tb_category (id_category,nm_category) values (gen_random_uuid(),'Eletronic');

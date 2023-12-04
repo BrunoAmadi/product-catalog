@@ -1,13 +1,23 @@
 package com.example.catalog.entities;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
+
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_category")
 public class Category {
 
+    @Id
+    @Column(name = "id_category")
+    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
 
+    @Column(name = "nm_category")
+    private String name;
 
     public Category(){}
 
