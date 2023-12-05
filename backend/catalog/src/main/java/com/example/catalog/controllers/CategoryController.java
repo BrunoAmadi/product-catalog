@@ -4,6 +4,9 @@ package com.example.catalog.controllers;
 import com.example.catalog.dtos.CategoryDto;
 import com.example.catalog.services.CategoryService;
 import com.example.catalog.services.DefaultCategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,8 +23,15 @@ public class CategoryController {
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public List<CategoryDto> findAll() {
-        final var listCategoryDto = categoryService.findAll();
+    public Page<CategoryDto> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+
+    ) {
+        PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction),orderBy);
+        final var listCategoryDto = categoryService.findAll(pageRequest);
         return listCategoryDto;
     }
 

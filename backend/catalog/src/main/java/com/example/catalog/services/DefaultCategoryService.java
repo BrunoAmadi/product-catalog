@@ -8,12 +8,14 @@ import com.example.catalog.services.exceptions.NotFoundException;
 import com.example.catalog.services.exceptions.InvalidUuidException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class DefaultCategoryService implements CategoryService {
@@ -26,9 +28,9 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CategoryDto> findAll() {
-        final var list = categoryRepository.findAll();
-        return list.stream().map(CategoryDto::from).collect(Collectors.toList());
+    public  Page<CategoryDto> findAll(PageRequest pageRequest) {
+        final var list = categoryRepository.findAll(pageRequest);
+        return list.map(CategoryDto::from);
 
     }
 
@@ -60,7 +62,7 @@ public class DefaultCategoryService implements CategoryService {
             if (!isValidUIID(id)) {
                 throw new InvalidUuidException("Id is not valid");
             }
-            
+
             var entity = categoryRepository.getReferenceById(UUID.fromString(id));
             entity.setName(dto.name());
             entity = categoryRepository.save(entity);
