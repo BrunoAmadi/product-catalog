@@ -1,5 +1,6 @@
 package com.example.catalog.entities;
 
+import com.example.catalog.dtos.CategoryDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -19,7 +20,8 @@ public class Category {
     @Column(name = "nm_category")
     private String name;
 
-    public Category(){}
+    public Category() {
+    }
 
     public Category(UUID id, String name) {
         this.id = id;
@@ -41,4 +43,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
 }

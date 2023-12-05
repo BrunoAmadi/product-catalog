@@ -8,7 +8,13 @@ import java.util.UUID;
 
 public interface CategoryService {
 
-     List<CategoryDto> findAll();
+    List<CategoryDto> findAll();
 
-     CategoryDto findById(String id);
+    CategoryDto findById(String id);
+
+    CategoryDto insert(CategoryDto categoryDto);
+
+    CategoryDto update(String id, CategoryDto dto);
+
+    void delete(String id);
 }
