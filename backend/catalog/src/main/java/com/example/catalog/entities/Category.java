@@ -1,9 +1,8 @@
 package com.example.catalog.entities;
-
-import com.example.catalog.dtos.CategoryDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +18,9 @@ public class Category {
 
     @Column(name = "nm_category")
     private String name;
+
+    @Column(name = "created_At",columnDefinition = "TIMESTAMP")
+    private Instant createdAt;
 
     public Category() {
     }
@@ -43,5 +45,12 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+
+
 
 }
